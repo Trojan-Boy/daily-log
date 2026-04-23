@@ -23,6 +23,8 @@ jobs:
 
       - name: Make daily commit
         run: |
+          # Sleep for a random time between 1 to 120 minutes to randomize the commit time
+          sleep $((RANDOM % 7200))
           DATE=$(date '+%Y-%m-%d %H:%M:%S')
           echo "- ✅ Active on $DATE" >> activity.md
           git add activity.md
