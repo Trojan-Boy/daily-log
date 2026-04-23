@@ -1,0 +1,30 @@
+name: Daily Green Contribution
+
+on:
+  schedule:
+    # Runs every day at 6:00 AM IST (00:30 UTC)
+    - cron: '30 0 * * *'
+  workflow_dispatch: # Allow manual trigger too
+
+permissions:
+  contents: write
+
+jobs:
+  daily-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config user.name "Trojan-Boy"
+          git config user.email "trojanbackuplink@gmail.com"
+
+      - name: Make daily commit
+        run: |
+          DATE=$(date '+%Y-%m-%d %H:%M:%S')
+          echo "- ✅ Active on $DATE" >> activity.md
+          git add activity.md
+          git commit -m "🟢 daily: $DATE"
+          git push
